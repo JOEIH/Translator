@@ -4,7 +4,6 @@ const uploadButton = document.querySelector('.button-upload');
 const form = document.querySelector('.form-upload');
 
 uploadedFile.addEventListener('change', () => {
-  // 가장 가까운 상위 요소 찾기
   if (!uploadedFile.files[0]) return;
 
   let fileName = uploadedFile.files[0].name;
