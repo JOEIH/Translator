@@ -3,10 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/pdfResult.css')}}"
-    />
+    <link rel="stylesheet" href="src/css/pdfResult.css" />
     <title>Translator</title>
   </head>
   <body>
@@ -19,7 +16,7 @@
         </div>
       </main>
     </div>
-    <script src="{{ url_for('static', filename='js/getFileText.js')}}"></script>
-    <script src="{{ url_for('static', filename='js/selectText.js')}}"></script>
+    <script type="module" src="src/js/getFileText.js"></script>
+    <script type="module" src="src/js/selectText.js"></script>
   </body>
 </html>

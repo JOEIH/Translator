@@ -20,7 +20,7 @@ document.onmouseup = async function () {
   }
 
   const result = await getTranslatedResult(
-    `http://localhost:6001/api/translate?text=${selected}`
+    `${process.env.VITE_SERVER_URL}/api/translate?text=${selected}`
   );
 
   console.log(result);

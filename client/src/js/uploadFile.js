@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 const uploadedFile = document.getElementById('uploadFile');
 const labelText = document.querySelector('.filename');
 const uploadButton = document.querySelector('.button-upload');
@@ -27,7 +30,7 @@ async function postFile(url = '', file) {
 
     localStorage.setItem('fileText', JSON.stringify(data));
 
-    window.location.href = 'http://127.0.0.1:6001/text';
+    window.location.href = '/text';
   }
 }
 
@@ -36,7 +39,7 @@ function onsubmitForm(e) {
 
   const file = uploadedFile.files[0];
 
-  postFile('http://localhost:6001/api/upload', file);
+  postFile(`${process.env.VITE_SERVER_URL}/api/upload`, file);
 }
 
 form.addEventListener('submit', onsubmitForm, false);
