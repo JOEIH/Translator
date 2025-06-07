@@ -1,6 +1,7 @@
 const title = document.querySelector('.title');
 const content = document.querySelector('.content');
 
+// 추출된 텍스트 렌더링
 function getFile() {
   const extracted_text = localStorage.getItem('fileText');
 
