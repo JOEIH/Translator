@@ -3,6 +3,12 @@
 *.pyc
 __pycache__/
 
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
 instance/
 
 .pytest_cache/
