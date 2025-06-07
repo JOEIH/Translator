@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/index.css')}}"
+    />
+    <title>Translator</title>
+  </head>
+  <body>
+    <div class="uploadBox">
+      <header>Choose a File!</header>
+      <form class="form-upload">
+        <label for="uploadFile" class="label-uploadFile"
+          ><p class="filename"></p
+        ></label>
+        <input
+          type="file"
+          name="uploadFile"
+          id="uploadFile"
+          accept="application/pdf"
+        />
+        <button class="button-upload">업로드</button>
+      </form>
+    </div>
+    <script src="{{ url_for('static', filename='js/uploadFile.js')}}"></script>
+  </body>
+</html>
