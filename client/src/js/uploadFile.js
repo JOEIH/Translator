@@ -24,9 +24,17 @@ async function postFile(url = '', file) {
       body: formData,
     });
 
-    const data = await response.json();
+    if (!response.ok) {
+      const errorMessage = await response.text();
+      console.log('error: ', errorMessage);
+      alert('파일 업로드 실패');
+      return;
+    }
 
-    localStorage.setItem('fileText', JSON.stringify(data));
+    const data = await response.json();
+    console.log(data);
+
+    localStorage.setItem('fileInfo', JSON.stringify(data));
 
     window.location.href = '/text';
   }
