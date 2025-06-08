@@ -1,4 +1,4 @@
-from flask import request
+from flask import request, jsonify
 from flask_restx import Resource, Namespace, reqparse
 from PyPDF2 import PdfReader
 
@@ -17,6 +17,7 @@ class FilePost(Resource):
       return {'error': 'No file uploaded'}, 400
     
     try:
+      filename = uploaded_file.filename.split('.pdf')[0]
       reader = PdfReader(uploaded_file)
       pages = reader.pages
     
@@ -24,8 +25,10 @@ class FilePost(Resource):
     
       for page in pages:
         text += page.extract_text()
+     
+      data = {'filename': filename, 'extracted_text': text}
       
-      return {'extracted_text': text}, 200
+      return data, 200
     
     except Exception as e:
       return {'error': str(e)}, 500
