@@ -86,7 +86,6 @@ class PostAndGetResult(Resource):
             }
           }],
           function_call={"name":"result"}, # 위에서 정의한 함수를 호출하도록 설정
-          temperature=0 # 창의성 없이 정확한 답변을 하도록 설정
         )
         
         # 문자열로 되어 있는 결과를 dictionary로 변경하기 위해 json.loads 사용
