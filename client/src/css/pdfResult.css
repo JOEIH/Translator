@@ -7,6 +7,17 @@ body {
   margin: 0;
 }
 
+a {
+  text-decoration: none;
+  color: rgb(178, 178, 178);
+  font-size: 12px;
+  text-align: end;
+
+  &:hover {
+    color: rgb(52, 52, 52);
+  }
+}
+
 .extracted {
   margin: 0;
   padding: 12px 0;
