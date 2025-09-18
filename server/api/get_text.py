@@ -1,6 +1,6 @@
 from flask import request
 from flask_restx import Resource, Namespace, reqparse
-from PyPDF2 import PdfReader
+import fitz
 
 # File이라는 이름의 api 요청 추가
 file_api = Namespace('File', description='파일 업로드')
@@ -19,19 +19,23 @@ class FilePost(Resource):
     # 업로드된 파일이 없다면 에러처리
     if not uploaded_file:
       return {'error': 'No file uploaded'}, 400
+    # 업로드된 파일이 pdf가 아니라면 에러처리
+    if uploaded_file.mimetype != 'application/pdf':
+      return {'error': 'PDF 파일만 업로드 가능합니다.'}, 400
     
     try:
+      res = uploaded_file.read() # 파일을 바이트 그대로 읽어옴
       # 파일 제목을 반환하기 위해 .pdf 앞부분만 잘라냄
       filename = uploaded_file.filename.split('.pdf')[0]
-      reader = PdfReader(uploaded_file) # pdf 호출
-      pages = reader.pages # 불러온 pdf의 모든 페이지
+      doc = fitz.open(stream=res, filetype='pdf') # stream에서 바이트를 읽음
     
       # 반환할 텍스트를 담기 위해 text 변수 선언
       text = ""
     
       # 각 페이지에서 text 추출
-      for page in pages:
-        text += page.extract_text()
+      for i in range(len(doc)):
+        page = doc[i]
+        text += page.get_text()
       
       data = {'filename': filename, 'extracted_text': text}
       
