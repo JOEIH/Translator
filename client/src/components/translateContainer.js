@@ -1,0 +1,117 @@
+import Component from './core';
+
+export default class TranslateContainer extends Component {
+  setup() {
+    this.state = {
+      languages: ['영어', '한국어', '일본어', '중국어'],
+    };
+    this.text = this.props.text;
+    this.$element = document.createElement('div');
+    this.$element.setAttribute('class', 'button-container');
+    this.$element.insertAdjacentHTML('afterbegin', this.template());
+  }
+  template() {
+    const { languages } = this.state;
+    return `
+      <div class='lang-select-box'>
+        <span class='select-text'>언어 선택<span>
+        <form name="selected-lang">
+          ${languages
+            .map(
+              (item) => `<input type='checkbox' name='lang' id=${item}/>
+          <label class='lang-button' for=${item}>${item}</label>
+          `
+            )
+            .join('')}
+        </form>
+      </div>
+      <button class='button-translate'>번역하기</button>
+    `;
+  }
+  setEvent() {
+    const confirm_button = this.$element.querySelector('.button-translate');
+
+    confirm_button.onclick = () => {
+      if (this.text) {
+        onClickButton(this.text, this.$target);
+
+        this.$element.remove();
+      }
+    };
+
+    async function onClickButton(text, base_tag) {
+      const result = await getTranslatedResult(
+        `${import.meta.env.VITE_SERVER_URL}`,
+        text
+      );
+
+      const div = showResult(result.translations);
+
+      if (div) {
+        base_tag.appendChild(div);
+      }
+    }
+
+    // 번역된 결과를 가져오는 api 요청
+    async function getTranslatedResult(url = '', text) {
+      if (!text) {
+        return alert('선택된 텍스트가 없습니다.');
+      } else {
+        const response = await fetch(`${url}/api/translate?text=${text}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!response.ok) {
+          const errorMessage = await response.text();
+          console.log('error: ', errorMessage);
+          alert('번역 실패');
+          return;
+        }
+
+        const data = await response.json();
+
+        return data.result;
+      }
+    }
+
+    // 번역 결과창
+    function showResult(result) {
+      if (!result) {
+        alert('번역 실패');
+        return;
+      }
+
+      // 이전 번역 결과 중첩되지 않게 삭제처리
+      const translated = document.querySelectorAll('.translated');
+      if (translated) {
+        translated.forEach((item) => {
+          item.remove();
+        });
+      }
+
+      const div = document.createElement('div');
+
+      div.setAttribute('class', 'translated');
+
+      for (let i of result) {
+        const li = document.createElement('p');
+        const lang_span = document.createElement('span');
+        const result_span = document.createElement('span');
+        li.setAttribute('class', 'translated-result');
+        lang_span.setAttribute('class', 'lang');
+        result_span.setAttribute('class', 'result');
+
+        lang_span.textContent = i.language;
+        result_span.textContent = i.text;
+
+        li.append(lang_span, result_span);
+        div.appendChild(li);
+      }
+
+      return div;
+    }
+  }
+}
