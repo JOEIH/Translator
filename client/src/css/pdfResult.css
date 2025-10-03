@@ -7,6 +7,17 @@ body {
   margin: 0;
 }
 
+a {
+  text-decoration: none;
+  color: rgb(178, 178, 178);
+  font-size: 12px;
+  text-align: end;
+
+  &:hover {
+    color: rgb(52, 52, 52);
+  }
+}
+
 .extracted {
   margin: 0;
   padding: 12px 0;
@@ -74,6 +85,52 @@ body {
   padding: 6px;
 }
 
+.button-container {
+  background-color: rgb(236, 236, 236);
+  width: 50%;
+  height: 30%;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: 0px 0px 8px 2px rgb(186, 186, 186);
+  margin-bottom: 10px;
+}
+
+.lang-select-box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+form[name='selected-lang'] {
+  width: 100%;
+  display: flex;
+  flex-grow: 1;
+  gap: 4px;
+}
+/* 언어 선택 체크박스 */
+input[type='checkbox'] {
+  display: none;
+}
+.lang-button {
+  background-color: white;
+  width: 100%;
+  border-radius: 5px;
+  text-align: center;
+  padding: 4px 0;
+
+  &:hover {
+    cursor: pointer;
+  }
+  &:checked {
+    background-color: rgb(17, 112, 255);
+    color: white;
+    font-weight: bold;
+  }
+}
+
 .button-translate {
   display: block;
   padding: 8px;
@@ -84,6 +141,7 @@ body {
   transition: background-color 0.1s ease;
   cursor: pointer;
   margin-top: 4px;
+  width: 100%;
 
   &:hover {
     background-color: rgb(14, 97, 220);
