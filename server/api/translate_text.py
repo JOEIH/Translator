@@ -22,6 +22,7 @@ class PostAndGetResult(Resource):
   def get(self):
     # 선택된 텍스트
     selectedText = request.args.get('text')
+    # selectedLang = request.args.get('lang')
     
     # 선택된 텍스트가 없을 경우 에러 전송
     if not selectedText:

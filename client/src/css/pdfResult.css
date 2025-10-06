@@ -87,7 +87,7 @@ a {
 
 .button-container {
   background-color: rgb(236, 236, 236);
-  width: 50%;
+  width: 46%;
   height: 30%;
   padding: 10px;
   border-radius: 10px;
@@ -95,7 +95,7 @@ a {
   flex-direction: column;
   gap: 4px;
   box-shadow: 0px 0px 8px 2px rgb(186, 186, 186);
-  margin-bottom: 10px;
+  margin: 10px 0;
 }
 
 .lang-select-box {
@@ -104,6 +104,10 @@ a {
   flex-direction: column;
   gap: 2px;
 }
+.select-text {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
 form[name='selected-lang'] {
   width: 100%;
   display: flex;
@@ -111,7 +115,7 @@ form[name='selected-lang'] {
   gap: 4px;
 }
 /* 언어 선택 체크박스 */
-input[type='checkbox'] {
+input[name='lang'] {
   display: none;
 }
 .lang-button {
@@ -119,16 +123,16 @@ input[type='checkbox'] {
   width: 100%;
   border-radius: 5px;
   text-align: center;
-  padding: 4px 0;
+  padding: 4px;
+  font-size: 14px;
 
   &:hover {
     cursor: pointer;
   }
-  &:checked {
-    background-color: rgb(17, 112, 255);
-    color: white;
-    font-weight: bold;
-  }
+}
+input[name='lang']:checked + .lang-button {
+  background-color: rgb(17, 112, 255);
+  color: white;
 }
 
 .button-translate {
@@ -142,6 +146,7 @@ input[type='checkbox'] {
   cursor: pointer;
   margin-top: 4px;
   width: 100%;
+  font-size: 14px;
 
   &:hover {
     background-color: rgb(14, 97, 220);

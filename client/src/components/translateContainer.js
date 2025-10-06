@@ -14,12 +14,14 @@ export default class TranslateContainer extends Component {
     const { languages } = this.state;
     return `
       <div class='lang-select-box'>
-        <span class='select-text'>언어 선택<span>
+        <span class='select-text'>언어 선택</span>
         <form name="selected-lang">
           ${languages
             .map(
-              (item) => `<input type='checkbox' name='lang' id=${item}/>
-          <label class='lang-button' for=${item}>${item}</label>
+              (
+                item
+              ) => `<input type='checkbox' name='lang' id="${item}" value="${item}"/>
+              <label class='lang-button' for="${item}">${item}</label>
           `
             )
             .join('')}
@@ -31,11 +33,25 @@ export default class TranslateContainer extends Component {
   setEvent() {
     const confirm_button = this.$element.querySelector('.button-translate');
 
+    // 확인 버튼 누르면 텍스트, 선택된 언어 값 전달
     confirm_button.onclick = () => {
       if (this.text) {
-        onClickButton(this.text, this.$target);
+        let selectedLangs = [];
+        const lang_button_input = this.$element.querySelectorAll(
+          'input[name="lang"]:checked'
+        );
 
-        this.$element.remove();
+        lang_button_input.forEach((lang) => {
+          selectedLangs.push(lang.value);
+        });
+
+        if (selectedLangs.length === 0) {
+          alert('번역할 언어를 선택해주세요.');
+        } else {
+          onClickButton(this.text, this.$target);
+
+          this.$element.remove();
+        }
       }
     };
 
