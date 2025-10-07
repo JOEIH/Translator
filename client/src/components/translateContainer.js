@@ -48,17 +48,18 @@ export default class TranslateContainer extends Component {
         if (selectedLangs.length === 0) {
           alert('번역할 언어를 선택해주세요.');
         } else {
-          onClickButton(this.text, this.$target);
+          onClickButton(this.text, this.$target, selectedLangs);
 
           this.$element.remove();
         }
       }
     };
 
-    async function onClickButton(text, base_tag) {
+    async function onClickButton(text, base_tag, lang) {
       const result = await getTranslatedResult(
         `${import.meta.env.VITE_SERVER_URL}`,
-        text
+        text,
+        lang
       );
 
       const div = showResult(result.translations);
@@ -69,16 +70,19 @@ export default class TranslateContainer extends Component {
     }
 
     // 번역된 결과를 가져오는 api 요청
-    async function getTranslatedResult(url = '', text) {
+    async function getTranslatedResult(url = '', text, lang) {
       if (!text) {
         return alert('선택된 텍스트가 없습니다.');
       } else {
-        const response = await fetch(`${url}/api/translate?text=${text}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+        const response = await fetch(
+          `${url}/api/translate?text=${text}&lang=${lang}`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
 
         if (!response.ok) {
           const errorMessage = await response.text();
@@ -120,7 +124,7 @@ export default class TranslateContainer extends Component {
         lang_span.setAttribute('class', 'lang');
         result_span.setAttribute('class', 'result');
 
-        lang_span.textContent = i.language;
+        lang_span.textContent = i.lang;
         result_span.textContent = i.text;
 
         li.append(lang_span, result_span);
