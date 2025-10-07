@@ -40,7 +40,8 @@ class PostAndGetResult(Resource):
             {'role' : 'user', 'content': f'입력된 문장: {selectedText}'},
             {'role' : 'user', 'content': f'번역할 언어: {selectedLang}'},
             {'role' : 'user', 'content': (
-              '입력된 문장을 번역할 언어에 따라 번역해줘.'
+              '입력된 문장을 번역할 언어에 따라 번역해줘.\n ' 
+              '입력된 문장을 번역할 언어에 입력된 모든 언어로 번역해야 해.'
               )}
           ],
           # JSON 반환 형식 지정

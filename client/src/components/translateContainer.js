@@ -1,9 +1,10 @@
 import Component from './core';
+import TranslatedResult from './translatedResult';
 
 export default class TranslateContainer extends Component {
   setup() {
     this.state = {
-      languages: ['영어', '한국어', '일본어', '중국어'],
+      languages: ['English', 'Korean', 'Japanese', 'Chinese'],
     };
     this.text = this.props.text;
     this.$element = document.createElement('div');
@@ -99,6 +100,7 @@ export default class TranslateContainer extends Component {
 
     // 번역 결과창
     function showResult(result) {
+      console.log(result);
       if (!result) {
         alert('번역 실패');
         return;
@@ -112,26 +114,11 @@ export default class TranslateContainer extends Component {
         });
       }
 
-      const div = document.createElement('div');
+      const resultBox = new TranslatedResult({
+        results: result,
+      });
 
-      div.setAttribute('class', 'translated');
-
-      for (let i of result) {
-        const li = document.createElement('p');
-        const lang_span = document.createElement('span');
-        const result_span = document.createElement('span');
-        li.setAttribute('class', 'translated-result');
-        lang_span.setAttribute('class', 'lang');
-        result_span.setAttribute('class', 'result');
-
-        lang_span.textContent = i.lang;
-        result_span.textContent = i.text;
-
-        li.append(lang_span, result_span);
-        div.appendChild(li);
-      }
-
-      return div;
+      return resultBox.$element;
     }
   }
 }

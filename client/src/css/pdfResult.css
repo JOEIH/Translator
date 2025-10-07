@@ -21,12 +21,17 @@ a {
 .extracted {
   margin: 0;
   padding: 12px 0;
+
+  &::selection {
+    background-color: gold;
+  }
 }
 
 .container {
   margin: 0 auto;
-  width: 70%;
+  width: 80%;
   min-height: 100vh;
+  min-width: 720px;
   box-sizing: border-box;
   padding: 20px;
   background-color: white;
@@ -62,7 +67,7 @@ a {
   margin: 0;
   display: flex;
   gap: 10px;
-  align-items: start;
+  align-items: center;
   background-color: white;
   padding: 6px;
   border-radius: 4px;
@@ -73,7 +78,7 @@ a {
   color: white;
   border-radius: 4px;
   display: inline-block;
-  width: 50px;
+  width: 12%;
   padding: 6px;
   text-align: center;
   order: 1;
@@ -88,6 +93,7 @@ a {
 .button-container {
   background-color: rgb(236, 236, 236);
   width: 46%;
+  min-width: 250px;
   height: 30%;
   padding: 10px;
   border-radius: 10px;
@@ -111,7 +117,6 @@ a {
 form[name='selected-lang'] {
   width: 100%;
   display: flex;
-  flex-grow: 1;
   gap: 4px;
 }
 /* 언어 선택 체크박스 */
@@ -120,7 +125,7 @@ input[name='lang'] {
 }
 .lang-button {
   background-color: white;
-  width: 100%;
+  flex-grow: 1;
   border-radius: 5px;
   text-align: center;
   padding: 4px;
@@ -131,8 +136,8 @@ input[name='lang'] {
   }
 }
 input[name='lang']:checked + .lang-button {
-  background-color: rgb(17, 112, 255);
-  color: white;
+  background-color: rgb(209, 209, 209);
+  box-shadow: inset 3px 3px 3px rgb(155, 155, 155);
 }
 
 .button-translate {
