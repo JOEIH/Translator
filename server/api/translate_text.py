@@ -13,17 +13,21 @@ load_dotenv()
 OpenAI.api_key = os.getenv('OPENAI_API_KEY') 
 
 # text를 request parameter로 추가
-parser = reqparse.RequestParser()
-parser.add_argument('text', required=True)
-parser.add_argument('lang', required=True)
+# parser = reqparse.RequestParser()
+# parser.add_argument('text', required=True)
+# parser.add_argument('lang', required=True)
 
 @translate_api.route('/translate')
-@translate_api.expect(parser)
+# @translate_api.expect(parser)
 class PostAndGetResult(Resource):
-  def get(self):
+  def post(self):
     # 선택된 텍스트
-    selectedText = request.args.get('text')
-    selectedLang = request.args.get('lang')
+    # selectedText = request.form.get('text')
+    # selectedLang = request.form.get('lang')
+    
+    data = request.get_json()
+    selectedText = data.get('text')
+    selectedLang = data.get('lang')
     
     # 선택된 텍스트가 없을 경우 에러 전송
     if not selectedText:
@@ -40,8 +44,9 @@ class PostAndGetResult(Resource):
             {'role' : 'user', 'content': f'입력된 문장: {selectedText}'},
             {'role' : 'user', 'content': f'번역할 언어: {selectedLang}'},
             {'role' : 'user', 'content': (
-              '입력된 문장을 번역할 언어에 따라 번역해줘.\n ' 
-              '입력된 문장을 번역할 언어에 입력된 모든 언어로 번역해야 해.'
+              '1. 입력된 문장을 번역할 언어에 따라 번역해줘.\n ' 
+              '2. 입력된 문장을 번역할 언어에 입력된 모든 언어로 번역해야 해.\n'
+              '3. 최종적으로 반환할 것은 번역된 문장이야.'
               )}
           ],
           # JSON 반환 형식 지정
@@ -68,7 +73,7 @@ class PostAndGetResult(Resource):
                       "lang": {
                         "type": "string",
                         "description": "The language of the translation",
-                        "enum": selectedLang.split(',')
+                        "enum": selectedLang
                       },
                       # 번역된 문장
                       "text": {

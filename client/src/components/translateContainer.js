@@ -75,15 +75,16 @@ export default class TranslateContainer extends Component {
       if (!text) {
         return alert('선택된 텍스트가 없습니다.');
       } else {
-        const response = await fetch(
-          `${url}/api/translate?text=${text}&lang=${lang}`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
+        const response = await fetch(`${url}/api/translate`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            text: text,
+            lang: lang,
+          }),
+        });
 
         if (!response.ok) {
           const errorMessage = await response.text();
@@ -100,7 +101,6 @@ export default class TranslateContainer extends Component {
 
     // 번역 결과창
     function showResult(result) {
-      console.log(result);
       if (!result) {
         alert('번역 실패');
         return;

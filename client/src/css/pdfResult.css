@@ -61,6 +61,7 @@ a {
   box-sizing: border-box;
   border-radius: 8px;
   margin: 14px 0;
+  height: fit-content;
 }
 
 .translated-result {
@@ -68,6 +69,7 @@ a {
   display: flex;
   gap: 10px;
   align-items: center;
+  justify-content: center;
   background-color: white;
   padding: 6px;
   border-radius: 4px;
@@ -77,10 +79,13 @@ a {
   background-color: rgb(17, 112, 255);
   color: white;
   border-radius: 4px;
-  display: inline-block;
   width: 12%;
   padding: 6px;
-  text-align: center;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
   order: 1;
 }
 
@@ -88,6 +93,19 @@ a {
   flex: 1;
   order: 2;
   padding: 6px;
+  display: flex;
+  flex-direction: column;
+}
+.result > i {
+  align-self: flex-end;
+  color: rgb(191, 191, 191);
+  opacity: 70%;
+  font-size: 20px;
+  cursor: pointer;
+
+  &:hover {
+    color: rgb(52, 52, 52);
+  }
 }
 
 .button-container {

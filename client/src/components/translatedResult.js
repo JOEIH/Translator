@@ -13,11 +13,30 @@ export default class TranslatedResult extends Component {
         .map(
           (result) =>
             `<div class='translated-result'>
-          <span class='lang'>${result.lang}</span>
-          <span class='result'>${result.text}</span>
+          <div class='lang'>${result.lang}</div>
+          <div class='result'>
+            <span class='text'>${result.text}</span>
+            <i class="fas fa-solid fa-clipboard"></i>
+          </div>
         </div>`
         )
         .join('')}
     `;
+  }
+  setEvent() {
+    const clipboardIcon = this.$element.querySelectorAll('i');
+
+    clipboardIcon.forEach((icon) => {
+      icon.onmousedown = (e) => {
+        const targetText = e.target.parentElement.children[0].textContent;
+        let copied = window.navigator.clipboard.writeText(targetText);
+
+        if (copied) {
+          icon.setAttribute('class', 'fa-solid fa-clipboard-check');
+          icon.style.color = 'black';
+          icon.style.opacity = '100%';
+        }
+      };
+    });
   }
 }
