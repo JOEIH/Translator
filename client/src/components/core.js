@@ -2,7 +2,7 @@ export default class Component {
   $target;
   state;
   $element;
-  constructor($target, props) {
+  constructor({ $target, ...props }) {
     this.$target = $target;
     this.props = props;
     this.setup();

@@ -1,9 +1,10 @@
 import Component from './core';
+import TranslatedResult from './translatedResult';
 
 export default class TranslateContainer extends Component {
   setup() {
     this.state = {
-      languages: ['영어', '한국어', '일본어', '중국어'],
+      languages: ['English', 'Korean', 'Japanese', 'Chinese'],
     };
     this.text = this.props.text;
     this.$element = document.createElement('div');
@@ -14,12 +15,14 @@ export default class TranslateContainer extends Component {
     const { languages } = this.state;
     return `
       <div class='lang-select-box'>
-        <span class='select-text'>언어 선택<span>
+        <span class='select-text'>언어 선택</span>
         <form name="selected-lang">
           ${languages
             .map(
-              (item) => `<input type='checkbox' name='lang' id=${item}/>
-          <label class='lang-button' for=${item}>${item}</label>
+              (
+                item
+              ) => `<input type='checkbox' name='lang' id="${item}" value="${item}"/>
+              <label class='lang-button' for="${item}">${item}</label>
           `
             )
             .join('')}
@@ -31,18 +34,33 @@ export default class TranslateContainer extends Component {
   setEvent() {
     const confirm_button = this.$element.querySelector('.button-translate');
 
+    // 확인 버튼 누르면 텍스트, 선택된 언어 값 전달
     confirm_button.onclick = () => {
       if (this.text) {
-        onClickButton(this.text, this.$target);
+        let selectedLangs = [];
+        const lang_button_input = this.$element.querySelectorAll(
+          'input[name="lang"]:checked'
+        );
 
-        this.$element.remove();
+        lang_button_input.forEach((lang) => {
+          selectedLangs.push(lang.value);
+        });
+
+        if (selectedLangs.length === 0) {
+          alert('번역할 언어를 선택해주세요.');
+        } else {
+          onClickButton(this.text, this.$target, selectedLangs);
+
+          this.$element.remove();
+        }
       }
     };
 
-    async function onClickButton(text, base_tag) {
+    async function onClickButton(text, base_tag, lang) {
       const result = await getTranslatedResult(
         `${import.meta.env.VITE_SERVER_URL}`,
-        text
+        text,
+        lang
       );
 
       const div = showResult(result.translations);
@@ -53,15 +71,19 @@ export default class TranslateContainer extends Component {
     }
 
     // 번역된 결과를 가져오는 api 요청
-    async function getTranslatedResult(url = '', text) {
+    async function getTranslatedResult(url = '', text, lang) {
       if (!text) {
         return alert('선택된 텍스트가 없습니다.');
       } else {
-        const response = await fetch(`${url}/api/translate?text=${text}`, {
-          method: 'GET',
+        const response = await fetch(`${url}/api/translate`, {
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
+          body: JSON.stringify({
+            text: text,
+            lang: lang,
+          }),
         });
 
         if (!response.ok) {
@@ -92,26 +114,11 @@ export default class TranslateContainer extends Component {
         });
       }
 
-      const div = document.createElement('div');
+      const resultBox = new TranslatedResult({
+        results: result,
+      });
 
-      div.setAttribute('class', 'translated');
-
-      for (let i of result) {
-        const li = document.createElement('p');
-        const lang_span = document.createElement('span');
-        const result_span = document.createElement('span');
-        li.setAttribute('class', 'translated-result');
-        lang_span.setAttribute('class', 'lang');
-        result_span.setAttribute('class', 'result');
-
-        lang_span.textContent = i.language;
-        result_span.textContent = i.text;
-
-        li.append(lang_span, result_span);
-        div.appendChild(li);
-      }
-
-      return div;
+      return resultBox.$element;
     }
   }
 }
