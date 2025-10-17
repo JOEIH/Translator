@@ -30,14 +30,20 @@ class FilePost(Resource):
       doc = fitz.open(stream=res, filetype='pdf') # stream에서 바이트를 읽음
     
       # 반환할 텍스트를 담기 위해 text 변수 선언
+      page_set = {}
       text = ""
+      page = 0
+      total_page = 0
     
       # 각 페이지에서 text 추출
       for i in range(len(doc)):
         page = doc[i]
-        text += page.get_text()
-      
-      data = {'filename': filename, 'extracted_text': text}
+        text = page.get_text() 
+        page_set[i + 1] = text
+        
+        total_page += 1
+        
+      data = {'filename': filename, 'extracted_text': text, 'total_page': total_page, 'page_set': page_set}
       
       # 파일 이름과 추출된 텍스트를 json 형식으로 반환
       return data, 200

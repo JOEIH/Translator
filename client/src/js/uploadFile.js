@@ -32,7 +32,6 @@ async function postFile(url = '', file) {
     }
 
     const data = await response.json();
-    console.log(data);
 
     localStorage.setItem('fileInfo', JSON.stringify(data));
 
