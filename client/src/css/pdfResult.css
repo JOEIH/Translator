@@ -67,6 +67,10 @@ p.extracted > *::selection {
   gap: 20px;
 }
 
+.content {
+  margin-bottom: 10%;
+}
+
 .title {
   margin: 20px 0;
   font-size: x-large;
@@ -205,6 +209,30 @@ input[name='lang']:checked + .lang-button {
 
 /* 페이지 */
 .page-box {
+  width: 70%;
+  height: 8%;
+  position: fixed;
+  padding-bottom: 2%;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
-  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.page-number {
+  background-color: rgb(235, 235, 235);
+  font-size: 14px;
+  border-style: none;
+  border-radius: 4px;
+  display: inline-block;
+  width: 40px;
+  height: 30px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: rgb(191, 191, 191);
+  }
 }

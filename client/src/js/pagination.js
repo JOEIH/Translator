@@ -3,6 +3,7 @@ const next = document.querySelector('.button-next');
 const pagebox = document.querySelector('.page-box');
 const content = document.querySelector('.content');
 
+// pdf 정보 호출
 const data = localStorage.getItem('fileInfo');
 const parsed = JSON.parse(data);
 const totalPages = parsed.total_page;
@@ -10,6 +11,20 @@ const pageSet = parsed.page_set;
 
 let currentPage = 1;
 const pageLimit = 5;
+let activatedPageButton = null;
+
+// 현재 페이지라면 버튼 스타일 변경
+const changeButtonStyle = (button) => {
+  if (activatedPageButton) {
+    activatedPageButton.style.backgroundColor = 'rgb(235, 235, 235)';
+    activatedPageButton.style.fontWeight = '300';
+  }
+
+  button.style.backgroundColor = 'rgb(191, 191, 191)';
+  button.style.fontWeight = 'bold';
+
+  activatedPageButton = button;
+};
 
 // 페이지 번호 출력
 const showPageGroup = () => {
@@ -29,22 +44,36 @@ const showPageGroup = () => {
   for (let i = firstPage; i <= lastPage; i++) {
     // 개별 페이지
     const page = document.createElement('button');
+    page.setAttribute('class', 'page-number');
+    page.setAttribute('id', `page-${i}`);
     page.textContent = i;
+
+    page.addEventListener('click', () => {
+      showText(pageSet, i);
+      changeButtonStyle(page);
+      currentPage = i;
+    });
+
     pagebox.appendChild(page);
   }
 };
 
 showPageGroup();
+let firstPageButton = document.querySelector(`#page-${currentPage}`);
+changeButtonStyle(firstPageButton);
 
 // 좌클릭
 prev.onclick = () => {
   if (currentPage > 1) {
     currentPage -= 1;
     showText(pageSet, currentPage);
-  }
 
-  if (currentPage % pageLimit == 0) {
-    showPageGroup();
+    if (currentPage % pageLimit == 0) {
+      showPageGroup();
+    }
+
+    const page = document.querySelector(`#page-${currentPage}`);
+    changeButtonStyle(page);
   }
 };
 
@@ -53,10 +82,13 @@ next.onclick = () => {
   if (currentPage < totalPages) {
     currentPage += 1;
     showText(pageSet, currentPage);
-  }
 
-  if (currentPage % pageLimit == 1) {
-    showPageGroup();
+    if (currentPage % pageLimit == 1) {
+      showPageGroup();
+    }
+
+    const page = document.querySelector(`#page-${currentPage}`);
+    changeButtonStyle(page);
   }
 };
 
