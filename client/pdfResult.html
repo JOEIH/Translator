@@ -8,6 +8,12 @@
       crossorigin="anonymous"
     ></script>
     <link rel="stylesheet" href="src/css/pdfResult.css" />
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+    />
     <title>Translator</title>
   </head>
   <body>
@@ -16,8 +22,16 @@
       <header class="title"></header>
       <hr class="divider" />
       <main class="content"></main>
+      <footer class="page-box"></footer>
     </div>
-    <script type="module" src="src/js/getFileText.js"></script>
+    <button class="button-prev">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <button class="button-next">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+    <script type="module" src="src/js/getFileName.js"></script>
     <script type="module" src="src/js/selectText.js"></script>
+    <script type="module" src="src/js/pagination.js"></script>
   </body>
 </html>

@@ -22,7 +22,7 @@ export default class TranslateContainer extends Component {
               (
                 item
               ) => `<input type='checkbox' name='lang' id="${item}" value="${item}"/>
-              <label class='lang-button' for="${item}">${item}</label>
+              <span class='lang-button' data-for="${item}">${item}</span>
           `
             )
             .join('')}
@@ -32,17 +32,40 @@ export default class TranslateContainer extends Component {
     `;
   }
   setEvent() {
+    const lang_button_label = this.$element.querySelectorAll('.lang-button');
+
+    // 언어 버튼 클릭 시 input 변경
+    lang_button_label.forEach((label) => {
+      label.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        const currentTarget = e.currentTarget;
+
+        const inputId = currentTarget.dataset['for'];
+        const input = document.getElementById(inputId);
+
+        if (input) {
+          input.checked = !input.checked;
+        }
+      });
+    });
+
     const confirm_button = this.$element.querySelector('.button-translate');
 
     // 확인 버튼 누르면 텍스트, 선택된 언어 값 전달
-    confirm_button.onclick = () => {
+    confirm_button.onmousedown = (e) => {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+
       if (this.text) {
         let selectedLangs = [];
-        const lang_button_input = this.$element.querySelectorAll(
+        const checked_input = this.$element.querySelectorAll(
           'input[name="lang"]:checked'
         );
 
-        lang_button_input.forEach((lang) => {
+        console.log('checked: ', checked_input);
+
+        checked_input.forEach((lang) => {
           selectedLangs.push(lang.value);
         });
 
@@ -50,7 +73,6 @@ export default class TranslateContainer extends Component {
           alert('번역할 언어를 선택해주세요.');
         } else {
           onClickButton(this.text, this.$target, selectedLangs);
-
           this.$element.remove();
         }
       }
@@ -67,6 +89,7 @@ export default class TranslateContainer extends Component {
 
       if (div) {
         base_tag.appendChild(div);
+        base_tag.scrollIntoView();
       }
     }
 
