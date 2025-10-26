@@ -5,7 +5,7 @@ from api.get_text import file_api
 from api.translate_text import translate_api
 
 # 화면 렌더링 위해 client 폴더에서 사용할 파일의 경로 지정
-app = Flask(__name__, static_folder='../client/dist', static_url_path='')
+app = Flask(__name__)
 
 # flask_restx가 자동생성하는 swagger 문서를 사용하기 위해 설정
 api = Api(app, version='1.0', title='Translator API', description='Translator with Swagger')
