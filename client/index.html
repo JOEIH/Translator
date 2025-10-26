@@ -3,19 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="src/css/index.css" />
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='css/index.css')}}"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
     />
     <title>Translator</title>
   </head>
   <body>
     <div class="uploadBox">
-      <header>Choose a File!</header>
+      <header>Select a File</header>
       <form class="form-upload">
         <label for="uploadFile" class="label-uploadFile"
-          ><p class="filename"></p
-        ></label>
+          ><p class="filename">Click Here!</p></label
+        >
         <input
           type="file"
           name="uploadFile"
@@ -25,6 +28,6 @@
         <button class="button-upload">업로드</button>
       </form>
     </div>
-    <script src="{{ url_for('static', filename='js/uploadFile.js')}}"></script>
+    <script type="module" src="src/js/uploadFile.js"></script>
   </body>
 </html>

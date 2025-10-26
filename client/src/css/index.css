@@ -1,5 +1,9 @@
 html {
   height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+    "Pretendard Variable", Pretendard, Roboto, "Noto Sans KR", "Segoe UI",
+    "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    sans-serif;
 }
 body {
   min-height: 100vh;
@@ -26,7 +30,7 @@ header {
 
 form {
   width: 90%;
-  height: 50%;
+  height: 80%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -35,12 +39,17 @@ form {
 }
 
 .label-uploadFile {
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 4px;
+  box-sizing: border-box;
+  padding: 20px;
   cursor: pointer;
   width: 100%;
   height: 100%;
-  border: rgb(196, 196, 196) 2px dashed;
+  background-color: rgb(242, 242, 242);
+  color: rgb(119, 119, 119);
   text-align: center;
 }
 
@@ -50,16 +59,18 @@ form {
 
 .button-upload {
   width: 100%;
-  height: 46px;
-  background-color: rgb(240, 240, 240);
+  height: 60px;
+  background-color: rgb(17, 112, 255);
   border-style: none;
   border-radius: 6px;
   padding: 4px 20px;
+  box-sizing: border-box;
   cursor: pointer;
+  color: white;
+  font-size: 14px;
   transition: background-color 0.1s ease;
 
   &:hover {
-    background-color: rgb(17, 112, 255);
-    color: white;
+    background-color: rgb(14, 97, 220);
   }
 }
