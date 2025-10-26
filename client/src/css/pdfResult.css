@@ -44,7 +44,7 @@ a {
 
   &:hover {
     /* 위에서 지정한 transform 값이 덮어씌워져서 -50% 다시 작성 */
-    transform: translateY(-50%) scale(1.5);
+    transform: translateY(-50%) scale(1.4);
   }
 }
 .button-prev {

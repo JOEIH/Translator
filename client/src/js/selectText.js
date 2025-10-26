@@ -2,7 +2,7 @@ import TranslateContainer from '../components/translateContainer';
 
 // 텍스트를 드래그하면 번역하기 버튼 생성
 document.addEventListener('mouseup', function (e) {
-  if (e.target.tagName == 'BUTTON') return;
+  if (!e.target.closest('.content')) return;
 
   const selection = document.getSelection();
   const selectedText = selection.toString().trim();
