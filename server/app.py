@@ -7,7 +7,7 @@ from api.translate_text import translate_api
 app = Flask(__name__)
 
 api = Api(app, version='1.0', title='Translator API', description='Translator with Swagger')
-CORS(app, resources={r"/api/*": {"origins": "https://stt-translator.netlify.app/"}})
+CORS(app, resources={r"/api/*": {"origins": "https://stt-translator.netlify.app"}})
 
 api.add_namespace(file_api, path='/api')
 api.add_namespace(translate_api, path='/api')  
