@@ -1,7 +1,6 @@
 const title = document.querySelector('.title');
 
-// 추출된 텍스트 렌더링
-function getFile() {
+function getFileName() {
   const data = localStorage.getItem('fileInfo');
 
   if (data) {
@@ -10,4 +9,4 @@ function getFile() {
   }
 }
 
-getFile();
+getFileName();

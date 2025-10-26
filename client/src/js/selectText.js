@@ -13,8 +13,6 @@ document.addEventListener('mouseup', function (e) {
   // const base_tag = selection.baseNode.parentNode;
   const base_tag = selection.focusNode.parentNode;
 
-  if (!base_tag.classList.contains('extracted')) return;
-
   // 이전 버튼 요소들 중첩되지 않게 삭제처리
   const buttons = document.querySelectorAll('.button-container');
   if (buttons) {
@@ -29,5 +27,7 @@ document.addEventListener('mouseup', function (e) {
     text: send_text,
   });
 
-  base_tag.appendChild(button_container.$element);
+  base_tag.insertAdjacentElement('afterend', button_container.$element);
+  // appendChild(button_container.$element);
+  base_tag.scrollIntoView();
 });

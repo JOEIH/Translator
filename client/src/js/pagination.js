@@ -16,14 +16,30 @@ let activatedPageButton = null;
 // 현재 페이지라면 버튼 스타일 변경
 const changeButtonStyle = (button) => {
   if (activatedPageButton) {
-    activatedPageButton.style.backgroundColor = 'rgb(235, 235, 235)';
+    activatedPageButton.style.backgroundColor = 'white';
     activatedPageButton.style.fontWeight = '300';
+    activatedPageButton.style.color = 'black';
   }
 
-  button.style.backgroundColor = 'rgb(191, 191, 191)';
+  button.style.backgroundColor = 'rgb(216, 232, 255)';
   button.style.fontWeight = 'bold';
+  button.style.color = 'rgb(14, 97, 220)';
 
   activatedPageButton = button;
+};
+
+// 좌우클릭 화살표 스타일
+const changeArrowStyle = () => {
+  next.style.color = 'white';
+  prev.style.color = 'white';
+
+  if (currentPage == totalPages) {
+    next.style.color = 'rgb(218, 218, 218)';
+  }
+
+  if (currentPage == 1) {
+    prev.style.color = 'rgb(218, 218, 218)';
+  }
 };
 
 // 페이지 번호 출력
@@ -52,6 +68,7 @@ const showPageGroup = () => {
       showText(pageSet, i);
       changeButtonStyle(page);
       currentPage = i;
+      changeArrowStyle();
     });
 
     pagebox.appendChild(page);
@@ -61,6 +78,7 @@ const showPageGroup = () => {
 showPageGroup();
 let firstPageButton = document.querySelector(`#page-${currentPage}`);
 changeButtonStyle(firstPageButton);
+changeArrowStyle();
 
 // 좌클릭
 prev.onclick = () => {
@@ -74,7 +92,11 @@ prev.onclick = () => {
 
     const page = document.querySelector(`#page-${currentPage}`);
     changeButtonStyle(page);
+  } else {
+    return;
   }
+
+  changeArrowStyle();
 };
 
 // 우클릭
@@ -89,18 +111,31 @@ next.onclick = () => {
 
     const page = document.querySelector(`#page-${currentPage}`);
     changeButtonStyle(page);
+  } else {
+    return;
   }
+
+  changeArrowStyle();
 };
 
 // 페이지별 텍스트 출력
 const showText = (pageSet, currentPage) => {
-  let text = pageSet[currentPage];
-  console.log(pageSet[currentPage]);
+  if (content) {
+    content.innerHTML = '';
+  }
 
-  if (text.trim().length != 0) {
-    content.innerHTML = `<p class='extracted' style='width=100%;'>
-        ${text}
-      </p>`;
+  let text = pageSet[currentPage];
+  const lines = text.split('\n');
+
+  for (let i of lines) {
+    if (i.trim().length != 0) {
+      const newLine = document.createElement('pre');
+      newLine.setAttribute('class', 'extracted');
+      newLine.style.width = '100%';
+      newLine.textContent = i;
+
+      content.insertAdjacentElement('beforeend', newLine);
+    }
   }
 };
 
