@@ -20,9 +20,5 @@ CORS(app, resources={r"/api/*": {"origins": origins}})
 api.add_namespace(file_api, path='/api')
 api.add_namespace(translate_api, path='/api')  
 
-@app.route('/home')
-def home():
-  return send_from_directory(app.static_folder, 'index.html')
-
 if __name__ == "__main__":
   app.run(debug=True, port=6001)
