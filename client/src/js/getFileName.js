@@ -1,6 +1,5 @@
-const title = document.querySelector('.title');
-
 function getFileName() {
+  const title = document.querySelector('.title');
   const data = localStorage.getItem('fileInfo');
 
   if (data) {
@@ -9,4 +8,4 @@ function getFileName() {
   }
 }
 
-getFileName();
+export { getFileName };
