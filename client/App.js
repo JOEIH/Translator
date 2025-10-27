@@ -2,7 +2,7 @@ import HomePage from './src/routes/Home';
 import PdfResultPage from './src/routes/PdfResult';
 
 const routes = [
-  { path: '/home', component: HomePage },
+  { path: '/', component: HomePage },
   { path: '/text', component: PdfResultPage },
 ];
 
