@@ -4,27 +4,28 @@ import { selectText } from '../js/selectText';
 import { paginationFunction } from '../js/pagination';
 
 export default class PdfResultPage extends Component {
-  constructor({ $target, ...props }) {
-    super({ $target, ...props });
+  template() {
+    return `
+    <div class="background">
+  <div class="container">
+    <a href="/"><i class="fas fa-solid fa-house"></i>&nbsp;처음으로</a>
+    <header class="title"></header>
+    <hr class="divider" />
+    <main class="content"></main>
+    <footer class="page-box"></footer>
+  </div>
+  <button class="button-prev">
+    <i class="fa-solid fa-chevron-left"></i>
+  </button>
+  <button class="button-next">
+    <i class="fa-solid fa-chevron-right"></i>
+  </button>
+</div>
+`;
   }
-  setup() {
-    this.getHtml();
-  }
-  render() {
-    this.$target.innerHTML = `<h1>Loading...</h1>`;
-  }
-  async getHtml() {
-    const response = await fetch('/pdfResult.html');
-    const html = await response.text();
-
-    this.$target.innerHTML = html;
-
-    this.renderAfter();
-  }
-  renderAfter() {
+  setEvent() {
     getFileName();
     selectText();
     paginationFunction();
   }
-  removeEvent() {}
 }

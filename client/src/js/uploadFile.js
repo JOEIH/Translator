@@ -45,7 +45,7 @@ function homepageFunction() {
       e.preventDefault();
 
       const file = uploadedFile.files[0];
-      const serverURL = import.meta.env.VITE_SERVER_URL;
+      const serverURL = import.meta.env.VITE_LOCAL_SERVER_URL;
 
       const data = await postFile(`${serverURL}/api/upload`, file);
 

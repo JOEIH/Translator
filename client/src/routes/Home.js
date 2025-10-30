@@ -2,25 +2,26 @@ import Component from '../components/core';
 import { homepageFunction } from '../js/uploadFile';
 
 export default class HomePage extends Component {
-  constructor({ $target, ...props }) {
-    super({ $target, ...props });
+  template() {
+    return `
+    <div class="uploadBox">
+  <header>Select a File</header>
+  <form class="form-upload">
+    <label for="uploadFile" class="label-uploadFile"
+      ><p class="filename">Click Here!</p></label
+    >
+    <input
+      type="file"
+      name="uploadFile"
+      id="uploadFile"
+      accept="application/pdf"
+    />
+    <button class="button-upload">업로드</button>
+  </form>
+</div>
+    `;
   }
-  setup() {
-    this.getHtml();
-  }
-  render() {
-    this.$target.innerHTML = `<h1>Loading...</h1>`;
-  }
-  async getHtml() {
-    const response = await fetch('/home.html');
-    const html = await response.text();
-
-    this.$target.innerHTML = html;
-
-    this.renderAfter();
-  }
-
-  renderAfter() {
+  setEvent() {
     homepageFunction();
   }
 }

@@ -7,13 +7,11 @@ export default class TranslateContainer extends Component {
       languages: ['English', 'Korean', 'Japanese', 'Chinese'],
     };
     this.text = this.props.text;
-    this.$element = document.createElement('div');
-    this.$element.setAttribute('class', 'button-container');
-    this.$element.insertAdjacentHTML('afterbegin', this.template());
   }
   template() {
     const { languages } = this.state;
     return `
+    <div class='button-container'>
       <div class='lang-select-box'>
         <span class='select-text'>언어 선택</span>
         <form name="selected-lang">
@@ -29,15 +27,19 @@ export default class TranslateContainer extends Component {
         </form>
       </div>
       <button class='button-translate'>번역하기</button>
+      </div>
     `;
   }
   setEvent() {
-    const lang_button_label = this.$element.querySelectorAll('.lang-button');
+    const lang_button_label = this.$target.querySelectorAll('.lang-button');
+    const confirm_button = this.$target.querySelector('.button-translate');
 
     // 언어 버튼 클릭 시 input 변경
     lang_button_label.forEach((label) => {
       label.addEventListener('click', (e) => {
         e.preventDefault();
+
+        console.log('클릭');
 
         const currentTarget = e.currentTarget;
 
@@ -50,45 +52,39 @@ export default class TranslateContainer extends Component {
       });
     });
 
-    const confirm_button = this.$element.querySelector('.button-translate');
+    if (confirm_button) {
+      // 확인 버튼 누르면 텍스트, 선택된 언어 값 전달
+      confirm_button.onmousedown = (e) => {
+        e.preventDefault();
+        e.stopImmediatePropagation();
 
-    // 확인 버튼 누르면 텍스트, 선택된 언어 값 전달
-    confirm_button.onmousedown = (e) => {
-      e.preventDefault();
-      e.stopImmediatePropagation();
+        if (this.text) {
+          let selectedLangs = [];
+          const checked_input = this.$target.querySelectorAll(
+            'input[name="lang"]:checked'
+          );
 
-      if (this.text) {
-        let selectedLangs = [];
-        const checked_input = this.$element.querySelectorAll(
-          'input[name="lang"]:checked'
-        );
+          console.log('checked: ', checked_input);
 
-        console.log('checked: ', checked_input);
+          checked_input.forEach((lang) => {
+            selectedLangs.push(lang.value);
+          });
 
-        checked_input.forEach((lang) => {
-          selectedLangs.push(lang.value);
-        });
-
-        if (selectedLangs.length === 0) {
-          alert('번역할 언어를 선택해주세요.');
-        } else {
-          onClickButton(this.text, this.$target, selectedLangs);
-          this.$element.remove();
+          if (selectedLangs.length === 0) {
+            alert('번역할 언어를 선택해주세요.');
+          } else {
+            onClickButton(this.text, this.$target, selectedLangs);
+          }
         }
-      }
-    };
+      };
+    }
 
     async function onClickButton(text, base_tag, lang) {
-      const serverURL = import.meta.env.VITE_SERVER_URL;
+      const serverURL = import.meta.env.VITE_LOCAL_SERVER_URL;
 
       const result = await getTranslatedResult(`${serverURL}`, text, lang);
 
-      const div = showResult(result.translations);
-
-      if (div) {
-        base_tag.appendChild(div);
-        base_tag.scrollIntoView();
-      }
+      showResult(result.translations, base_tag);
     }
 
     // 번역된 결과를 가져오는 api 요청
@@ -121,7 +117,7 @@ export default class TranslateContainer extends Component {
     }
 
     // 번역 결과창
-    function showResult(result) {
+    function showResult(result, base_tag) {
       if (!result) {
         alert('번역 실패');
         return;
@@ -135,11 +131,16 @@ export default class TranslateContainer extends Component {
         });
       }
 
-      const resultBox = new TranslatedResult({
+      const resultBox = document.createElement('div');
+      base_tag.insertAdjacentElement('afterend', resultBox);
+
+      new TranslatedResult({
+        $target: resultBox,
         results: result,
       });
 
-      return resultBox.$element;
+      base_tag.scrollIntoView();
+      base_tag.remove();
     }
   }
 }
