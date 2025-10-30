@@ -1,14 +1,10 @@
 import Component from './core';
 
 export default class TranslatedResult extends Component {
-  setup() {
-    this.$element = document.createElement('div');
-    this.$element.setAttribute('class', 'translated');
-    this.$element.insertAdjacentHTML('afterbegin', this.template());
-  }
   template() {
     const { results } = this.props;
     return `
+    <div class='translated'>
       ${results
         .map(
           (result) =>
@@ -21,10 +17,11 @@ export default class TranslatedResult extends Component {
         </div>`
         )
         .join('')}
+      </div>
     `;
   }
   setEvent() {
-    const clipboardIcon = this.$element.querySelectorAll('i');
+    const clipboardIcon = this.$target.querySelectorAll('i');
 
     clipboardIcon.forEach((icon) => {
       icon.onmousedown = (e) => {

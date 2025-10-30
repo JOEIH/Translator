@@ -13,7 +13,7 @@ export default class Component {
     return '';
   }
   render() {
-    // this.$target.insertAdjacentHTML('afterend', this.template());
+    this.$target.innerHTML = this.template();
     this.setEvent();
   }
   setEvent() {}

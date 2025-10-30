@@ -23,13 +23,15 @@ function selectText() {
     }
 
     let send_text = selectedText;
-    const button_container = new TranslateContainer({
-      $target: base_tag,
+
+    const translatorComponentBox = document.createElement('div');
+    base_tag.insertAdjacentElement('afterend', translatorComponentBox);
+
+    new TranslateContainer({
+      $target: translatorComponentBox,
       text: send_text,
     });
 
-    base_tag.insertAdjacentElement('afterend', button_container.$element);
-    // appendChild(button_container.$element);
     base_tag.scrollIntoView();
   });
 }
