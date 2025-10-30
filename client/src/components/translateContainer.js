@@ -80,7 +80,7 @@ export default class TranslateContainer extends Component {
     }
 
     async function onClickButton(text, base_tag, lang) {
-      const serverURL = import.meta.env.VITE_LOCAL_SERVER_URL;
+      const serverURL = import.meta.env.VITE_SERVER_URL;
 
       const result = await getTranslatedResult(`${serverURL}`, text, lang);
 
